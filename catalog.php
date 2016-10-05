@@ -54,28 +54,8 @@
 				</table>
 			</form>	
 	<!---Datalist---------------->
-			<script>
-				function upLike(){
-					var ajaxReq = new XMLHttpRequest();
-					ajaxReq.onreadystatechange = function(){
-						if (ajaxReq.readyState==4){
-							var ajaxDisplay = document.getElementById('try');
-							ajaxDisplay.innerHTML = ajaxReq.responseText;
-						}
-					}
-					var val = document.getElementById('u').value;
-					var queryString="?val="+val;
-					ajaxReq.open("GET","ajaxTry.php"+ queryString,true);
-					ajaxReq.send(null);
-					
-				}
-			</script>
-			<div>
-			<span id="try"></script>
-			<span id="u">uekdi</script>
-			</div>
-			<input type = 'button' onclick = 'upLike()' value = 'Query MySQL'/>
-			<br><br>
+			<br>
+			<br>
 			<?php
 				session_start();
 				if (isset($_SESSION["user"])){
@@ -104,47 +84,52 @@
 							<td style="width:25% ">
 								<?php echo '<img class="displayImg" src="data:image/jpeg;base64,'.base64_encode( $pict[$i] ).'"/>'; ?>
 							</td>
-							<td style="width:30%" valign="top">
+							<td style="width:49%" valign="top">
 								<div style="font-size: 18px"><b><?php echo $pN[$i]?></b><br>
 								IDR <?php echo number_format($price[$i],0,",",".")."</div>".$desc[$i]?>
 							</td>
 							<td valign="top">
-								<?php echo "<br>".$like[$i]." likes<br>".	$purch[$i]." purchases<br>" ?>
+								<br><div style="margin-left:5px">
+								<span id='l<?php echo $i ?>'> <?php echo $like[$i]?> </span> likes<br>
+								<?php echo $purch[$i]." purchases<br>" ?>
+								</div>
 								<br>
 								<div>
 									
 									<script>
-										function upLike(i,j){
+										function upLike(i,j,k){
 											var ajaxReq = new XMLHttpRequest();
 											ajaxReq.onreadystatechange = function(){
 											if (ajaxReq.readyState==4){
-												var ajaxDisplay = document.getElementById(i);
-												ajaxDisplay.value = ajaxReq.responseText;
+												var ajaxDisplay = document.getElementById(k);
+												ajaxDisplay.innerHTML = ajaxReq.responseText;
+												
+												var likeSum = document.getElementById('l'+k);
+												var countLike = likeSum.innerHTML*1;
+												if (j==1) countLike -= 1;
+												else countLike += 1;
+												likeSum.innerHTML = countLike*1;
 											}
 											}
-											alert(i);
-											alert(j);
 											var val 	= i + "";//document.getElementById(i).value;
 											var ilike 	= j + "";//"<?php echo $is_Like[$i]; ?>";
-										
-											var queryString="?val="+val+"&ilike="+ilike;
+											var idx		= k	+ "";
+											//var uname	= "<?php echo $_GET['username'];?>";
+											var queryString="?val="+val+"&ilike="+ilike+"&idx="+idx;//+"&uname="+uname;
 											ajaxReq.open("GET","ajaxTry.php"+ queryString,true);
 											ajaxReq.send(null);
 										}
 									</script>
+									<br><br>								
 									
-									<?php echo $id_pro[$i]?>
-									<br><br><?php echo $is_Like[$i]?>
-									
-									<form action="" method="post" class = "user">
-										<div><span id="res"></span>
+										<span id='<?php echo $i?>'>
 										<?php if ($is_Like[$i]==1){?>
-											<input type = 'button'  class="likeButton" onclick = 'upLike(<?php echo $id_pro[$i];?>,<?php echo $is_Like[$i];?>)' id='<?php echo $id_pro[$i]?>' value = 'LIKED'/>
+											<input type = 'button'  class="likeButton" onclick = 'upLike(<?php echo $id_pro[$i];?>,<?php echo $is_Like[$i];?>, <?php echo $i;?> )' id='a<?php echo $id_pro[$i]?>' value = 'LIKED'/>
 										<?php }else{ ?>
-											<input type = 'button'  class="unlikeButton" onclick = 'upLike(<?php echo $id_pro[$i];?>,<?php echo $is_Like[$i];?>)' id='<?php echo $id_pro[$i]?>' value = 'LIKE'/>
+											<input type = 'button'  class="unlikeButton" onclick = 'upLike(<?php echo $id_pro[$i];?>,<?php echo $is_Like[$i];?>, <?php echo $i;?>)' id='a<?php echo $id_pro[$i]?>' value = 'LIKE'/>
 										<?php } ?>
-			
-									</form>
+										</span>
+									
 									<form action="retrievePurchase.php" method="post" class = "user">
 										<button type="submit" class="buyButton" name="buyButton" value="<?php echo $id_pro[$i]?>"><b>Buy<b></button>
 									</form>
