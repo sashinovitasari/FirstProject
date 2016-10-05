@@ -101,34 +101,57 @@
 											var ajaxReq = new XMLHttpRequest();
 											ajaxReq.onreadystatechange = function(){
 											if (ajaxReq.readyState==4){
-												var ajaxDisplay = document.getElementById(k);
+																							var ajaxDisplay = document.getElementById(k);
 												ajaxDisplay.innerHTML = ajaxReq.responseText;
 												
 												var likeSum = document.getElementById('l'+k);
-												var countLike = likeSum.innerHTML*1;
-												if (j==1) countLike -= 1;
-												else countLike += 1;
-												likeSum.innerHTML = countLike*1;
+													var countLike = likeSum.innerHTML*1;
+													if (j==1) countLike -= 1;
+													else countLike += 1;
+													likeSum.innerHTML = countLike*1;
 											}
 											}
+											
 											var val 	= i + "";//document.getElementById(i).value;
 											var ilike 	= j + "";//"<?php echo $is_Like[$i]; ?>";
 											var idx		= k	+ "";
-											//var uname	= "<?php echo $_GET['username'];?>";
+											
 											var queryString="?val="+val+"&ilike="+ilike+"&idx="+idx;//+"&uname="+uname;
 											ajaxReq.open("GET","ajaxTry.php"+ queryString,true);
 											ajaxReq.send(null);
+											
+											/*var ajaxReq = new XMLHttpRequest();
+											ajaxReq.onreadystatechange = function(){
+											if (ajaxReq.readyState==4){
+													var ajaxDisplay = document.getElementById(k);
+													ajaxDisplay.innerHTML = ajaxReq.responseText;
+												
+													var likeSum = document.getElementById('l'+k);
+													var countLike = likeSum.innerHTML*1;
+													if (j==1) countLike -= 1;
+													else countLike += 1;
+													likeSum.innerHTML = countLike*1;
+												}
+											}
+											alert("hi");
+											var val 	= i + "";//document.getElementById(i).value;
+											var ilike 	= j + "";//"<?php echo $is_Like[$i]; ?>";
+											var idx		= k	+ "";
+											
+											var queryString="?val="+val+"&ilike="+ilike+"&idx="+idx;//+"&uname="+uname;
+											ajaxReq.open("GET","ajaxTry.php"+ queryString,true);
+											ajaxReq.send(null);*/
 										}
 									</script>
 									<br><br>								
 									
-										<span id='<?php echo $i?>'>
+									<span id='<?php echo $i?>'>
 										<?php if ($is_Like[$i]==1){?>
 											<input type = 'button'  class="likeButton" onclick = 'upLike(<?php echo $id_pro[$i];?>,<?php echo $is_Like[$i];?>, <?php echo $i;?> )' id='a<?php echo $id_pro[$i]?>' value = 'LIKED'/>
 										<?php }else{ ?>
 											<input type = 'button'  class="unlikeButton" onclick = 'upLike(<?php echo $id_pro[$i];?>,<?php echo $is_Like[$i];?>, <?php echo $i;?>)' id='a<?php echo $id_pro[$i]?>' value = 'LIKE'/>
 										<?php } ?>
-										</span>
+									</span>
 									
 									<form action="retrievePurchase.php" method="post" class = "user">
 										<button type="submit" class="buyButton" name="buyButton" value="<?php echo $id_pro[$i]?>"><b>Buy<b></button>
@@ -141,9 +164,7 @@
 						<br><br>
 				<?php }
 			}
-			else echo "<br><br><h1 style=\"text-align:center\">not found</h1>";
-			
-		?>
+			else echo "<br><br><h1 style=\"text-align:center\">not found</h1>";	?>
 		<br>
 		
 	<!--------------------------->
